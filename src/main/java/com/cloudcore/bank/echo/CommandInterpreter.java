@@ -1,5 +1,7 @@
 package com.cloudcore.bank.echo;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.security.SecureRandom;
 import java.util.concurrent.*;
@@ -47,19 +49,21 @@ public class CommandInterpreter {
     public static ExecutorService executor3 = Executors.newFixedThreadPool(3);
 
     public static void main(String[] args) {
+        initialize();
 
-        for (int i = 0; i < 25; i++) {
-            raidaArray[i] = new RAIDA(i);
-        }//end for all raida
-
-        printWelcome();
-        //Load up from files
-        StateManager stateManager = new StateManager();
-        //Start the Program.
         run();
 
         System.out.println("Thank you for using CloudCoin Foundation. Goodbye.");
-    }//End main
+    }
+
+    public static void initialize() {
+        for (int i = 0; i < 25; i++) {
+            raidaArray[i] = new RAIDA(i);
+        }
+
+        printWelcome();
+        StateManager stateManager = new StateManager();
+    }
 
     public static void run() {
         boolean restart = false;
@@ -1206,252 +1210,17 @@ public class CommandInterpreter {
     public static void setRaidaStatus() {
         // String echo1 = raidaArray[0].echo());
         //create a callable for each method
-        Callable<Void> callable0 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[0].echo();
-                System.out.print(".0");
-                return null;
-            }
-        };
 
-        Callable<Void> callable1 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[1].echo();
-                System.out.print(".1");
+        List<Callable<Void>> taskList = new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+            final int index = i;
+            Callable<Void> callable = () -> {
+                raidaArray[index].echo();
+                System.out.print("." + index);
                 return null;
-            }
-        };
-
-        Callable<Void> callable2 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[2].echo();
-                System.out.print(".2");
-                return null;
-            }
-        };
-
-        Callable<Void> callable3 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[3].echo();
-                System.out.print(".3");
-                return null;
-            }
-        };
-        Callable<Void> callable4 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[4].echo();
-                System.out.print(".4");
-                return null;
-            }
-        };
-
-        Callable<Void> callable5 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[5].echo();
-                System.out.print(".5");
-                return null;
-            }
-        };
-
-        Callable<Void> callable6 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[6].echo();
-                System.out.print(".6");
-                return null;
-            }
-        };
-        Callable<Void> callable7 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[7].echo();
-                System.out.print(".7");
-                return null;
-            }
-        };
-
-        Callable<Void> callable8 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[8].echo();
-                System.out.print(".8");
-                return null;
-            }
-        };
-
-        Callable<Void> callable9 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[9].echo();
-                System.out.print(".9");
-                return null;
-            }
-        };
-
-        Callable<Void> callable10 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[10].echo();
-                System.out.print(".10");
-                return null;
-            }
-        };
-
-        Callable<Void> callable11 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[11].echo();
-                System.out.print(".11");
-                return null;
-            }
-        };
-
-        Callable<Void> callable12 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[12].echo();
-                System.out.print(".12");
-                return null;
-            }
-        };
-
-        Callable<Void> callable13 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[13].echo();
-                System.out.print(".13");
-                return null;
-            }
-        };
-        Callable<Void> callable14 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[14].echo();
-                System.out.print(".14");
-                return null;
-            }
-        };
-
-        Callable<Void> callable15 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[15].echo();
-                System.out.print(".15");
-                return null;
-            }
-        };
-
-        Callable<Void> callable16 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[16].echo();
-                System.out.print(".16");
-                return null;
-            }
-        };
-        Callable<Void> callable17 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[17].echo();
-                System.out.print(".17");
-                return null;
-            }
-        };
-
-        Callable<Void> callable18 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[18].echo();
-                System.out.print(".18");
-                return null;
-            }
-        };
-
-        Callable<Void> callable19 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[19].echo();
-                System.out.print(".19");
-                return null;
-            }
-        };
-        Callable<Void> callable20 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[20].echo();
-                System.out.print(".20");
-                return null;
-            }
-        };
-
-        Callable<Void> callable21 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[21].echo();
-                System.out.print(".21");
-                return null;
-            }
-        };
-
-        Callable<Void> callable22 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[22].echo();
-                System.out.print(".22");
-                return null;
-            }
-        };
-
-        Callable<Void> callable23 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[23].echo();
-                System.out.print(".23");
-                return null;
-            }
-        };
-        Callable<Void> callable24 = new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                raidaArray[24].echo();
-                System.out.print(".24");
-                return null;
-            }
-        };
-
-        //add to a list
-        List<Callable<Void>> taskList = new ArrayList<Callable<Void>>();
-        taskList.add(callable0);
-        taskList.add(callable1);
-        taskList.add(callable2);
-        taskList.add(callable3);
-        taskList.add(callable4);
-        taskList.add(callable5);
-        taskList.add(callable6);
-        taskList.add(callable7);
-        taskList.add(callable8);
-        taskList.add(callable9);
-        taskList.add(callable10);
-        taskList.add(callable11);
-        taskList.add(callable12);
-        taskList.add(callable13);
-        taskList.add(callable14);
-        taskList.add(callable15);
-        taskList.add(callable16);
-        taskList.add(callable17);
-        taskList.add(callable18);
-        taskList.add(callable19);
-        taskList.add(callable20);
-        taskList.add(callable21);
-        taskList.add(callable22);
-        taskList.add(callable23);
-        taskList.add(callable24);
+            };
+            taskList.add(callable);
+        }
 
         //create a pool executor with 3 threads
         //ExecutorService executor = Executors.newFixedThreadPool(25);
@@ -1474,6 +1243,7 @@ public class CommandInterpreter {
             }
 
         } catch (InterruptedException ie) {
+            ie.printStackTrace();
             //do something if you care about interruption;
         }
 
@@ -1513,15 +1283,7 @@ public class CommandInterpreter {
                 nextState = stateManager.currentState.getExit("start");
                 break;
             case "test":
-                nextState = stateManager.currentState.getExit("test");
-                System.out.println("\nEchoing RAIDA.");
-                //    loadRaida();
-                setRaidaStatus();
-                //Get JSON from RAIDA Directory
-                System.out.println();
-                for (int i = 0; i < 25; i++) {
-                    System.out.println("RAIDA" + i + ": " + raidaArray[i].status + ", ms:" + raidaArray[i].ms);
-                }//end for each raida status
+                testEchoRaida();
                 break;
             case "founder":
                 nextState = stateManager.currentState.getExit("founder");
@@ -1765,4 +1527,23 @@ public class CommandInterpreter {
 
         return returnString;
     }//end grade coin
+
+    public static void testEchoRaida() {
+        Instant before = Instant.now();
+
+        System.out.println("\nEchoing RAIDA.");
+        //    loadRaida();
+        setRaidaStatus();
+        //Get JSON from RAIDA Directory
+        System.out.println();
+        for (int i = 0; i < 25; i++) {
+            System.out.println("RAIDA" + i + ": " + raidaArray[i].status + ", ms:" + raidaArray[i].ms);
+        }//end for each raida status
+
+        Instant after = Instant.now();
+
+        System.out.println("Total time: " + Duration.between(before, after).toMillis());
+
+        stateManager.currentState = stateManager.currentState.getExit("test");
+    }
 }//EndMain
