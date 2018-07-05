@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.*;
 
 /**
@@ -30,7 +32,8 @@ public class RAIDA {
     public String name;
     public String status; //Unknown, slow or ready
     public String testStatus; //Unknown, slow or ready
-    public long ms; //milliseconds
+    public long msServer; // milliseconds for server
+    public long ms; //total milliseconds
     public long dms = 0; //ms to detect
     public String lastJsonRaFromServer = null;
     public String lastTicket = null;
@@ -40,6 +43,7 @@ public class RAIDA {
     public String lastTicketStatus = "empty";//ticket, fail, error
     public String lastFixStatus = "empty";//ticket, fail, error
     public String lastHtml = "empty";//ticket, fail, error
+    public String msg = "";//message from server
 
     /**
      * Constructor for objects of class RAIDA
@@ -80,16 +84,26 @@ public class RAIDA {
         Instant before = Instant.now();
         try {
             html = getHtml(url);
+            this.lastJsonRaFromServer = html;
         } catch (IOException ex) {
-
             this.status = "error";
-            //System.out.println( status );
+            ex.printStackTrace();
             return "error";
         }
         Instant after = Instant.now();
-        //System.out.println( html );
-        boolean isReady = html.contains("ready");
         this.ms = Duration.between(before, after).toMillis();
+
+        try {
+            JSONObject json = new JSONObject(html);
+            this.msg = json.getString("message");
+            this.msServer = (long) (1000f * Float.valueOf(msg.substring(msg.lastIndexOf('=') + 2)));
+        } catch (JSONException | NumberFormatException e) {
+            System.out.println("Error: html response does not contain a valid message response: " + html);
+            e.printStackTrace();
+        }
+
+        System.out.println( html );
+        boolean isReady = html.contains("ready");
         if (isReady) {
             this.status = "ready";
             return "ready";
@@ -97,7 +111,7 @@ public class RAIDA {
             this.status = "error";
             return "error";
         }
-    }//end echo
+    }
 
     public String test() {
         String html = "error";

@@ -1529,21 +1529,24 @@ public class CommandInterpreter {
     }//end grade coin
 
     public static void testEchoRaida() {
-        Instant before = Instant.now();
-
         System.out.println("\nEchoing RAIDA.");
-        //    loadRaida();
-        setRaidaStatus();
-        //Get JSON from RAIDA Directory
         System.out.println();
+
+        setRaidaStatus();
+
+        StringBuilder masterFile = new StringBuilder();
+        Logger.emptyFolder("Echo");
+
         for (int i = 0; i < 25; i++) {
+            masterFile.append(raidaArray[i].lastJsonRaFromServer);
+            masterFile.append("<br>");
+            Logger.logFile("Echo", i + "." + raidaArray[i].status + "." + raidaArray[i].msServer + "." +
+                    raidaArray[i].ms + ".log", raidaArray[i].lastJsonRaFromServer.getBytes());
             System.out.println("RAIDA" + i + ": " + raidaArray[i].status + ", ms:" + raidaArray[i].ms);
-        }//end for each raida status
+        }
 
-        Instant after = Instant.now();
-
-        System.out.println("Total time: " + Duration.between(before, after).toMillis());
+        Logger.logFile("Echo", "echo_log.html", masterFile.toString().getBytes());
 
         stateManager.currentState = stateManager.currentState.getExit("test");
     }
-}//EndMain
+}
