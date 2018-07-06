@@ -61,6 +61,7 @@ public class StateManager {
         start_mode.setCommand("bank mode");
         start_mode.setCommand("founder mode");
         start_mode.setCommand("test mode");
+        start_mode.setCommand("fake test mode");
         start_mode.setCommand("quit");
 
         /* BANK MODE */

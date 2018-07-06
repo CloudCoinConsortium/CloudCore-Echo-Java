@@ -65,15 +65,20 @@ public class RAIDA {
         trustedTriad3 = new int[]{trustedServers[3], trustedServers[5], trustedServers[6]};
         trustedTriad4 = new int[]{trustedServers[4], trustedServers[6], trustedServers[7]};
 
+        switchToRealHost();
+    }
 
-        this.status = "unknown";
-        this.testStatus = "unknown";
-        this.ms = "";
+
+    // Methods
+
+    public void switchToRealHost() {
         this.fullUrl = "https://raida" + RAIDANumber + ".cloudcoin.global/service/";
+    }
 
-    }//RAIDA
+    public void switchToFakeHost() {
+        this.fullUrl = "https://raida" + RAIDANumber + "-net2.cloudcoin.global/service/";
+    }
 
-    //Methods
     public String echo() {
         String html = "error";
         String url = this.fullUrl + "echo";//." + this.ext;

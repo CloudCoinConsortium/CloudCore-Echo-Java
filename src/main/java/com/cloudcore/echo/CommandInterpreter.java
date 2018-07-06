@@ -59,6 +59,18 @@ public class CommandInterpreter {
         StateManager stateManager = new StateManager();
     }
 
+    public static void initializeRealRaida() {
+        for (int i = 0; i < 25; i++) {
+            raidaArray[i].switchToRealHost();
+        }
+    }
+
+    public static void initializeFakeRaida() {
+        for (int i = 0; i < 25; i++) {
+            raidaArray[i].switchToFakeHost();
+        }
+    }
+
     public static void run() {
         boolean restart = false;
         //System.out.println( stateManager.currentState.getLongDescription() );
@@ -516,10 +528,15 @@ public class CommandInterpreter {
                     break;
 
                 case "test mode":
+                    initializeRealRaida();
                     changeState("test");
                     prompt = "Test Mode";
                     break;
-
+                case "fake test mode":
+                    initializeFakeRaida();
+                    changeState("test");
+                    prompt = "Test Mode";
+                    break;
                 case "founder mode":
                     changeState("founder");
                     prompt = "Founder Mode";
