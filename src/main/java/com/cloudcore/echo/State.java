@@ -1,7 +1,6 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A room can hold monsters, items, treasure and Characters.

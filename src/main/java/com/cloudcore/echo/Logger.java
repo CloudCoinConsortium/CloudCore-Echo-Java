@@ -1,4 +1,4 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import java.io.File;
 import java.io.IOException;

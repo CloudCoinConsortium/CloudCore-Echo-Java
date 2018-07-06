@@ -1,4 +1,4 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 /**
  * CloudCoin Crafter

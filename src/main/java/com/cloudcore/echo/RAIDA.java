@@ -1,17 +1,14 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.*;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.time.*;
 
 /**
@@ -33,7 +30,7 @@ public class RAIDA {
     public String status; //Unknown, slow or ready
     public String testStatus; //Unknown, slow or ready
     public long msServer; // milliseconds for server
-    public long ms; //total milliseconds
+    public String ms; //total milliseconds
     public long dms = 0; //ms to detect
     public String lastJsonRaFromServer = null;
     public String lastTicket = null;
@@ -71,7 +68,7 @@ public class RAIDA {
 
         this.status = "unknown";
         this.testStatus = "unknown";
-        this.ms = 0;
+        this.ms = "";
         this.fullUrl = "https://raida" + RAIDANumber + ".cloudcoin.global/service/";
 
     }//RAIDA
@@ -81,7 +78,6 @@ public class RAIDA {
         String html = "error";
         String url = this.fullUrl + "echo";//." + this.ext;
 
-        Instant before = Instant.now();
         try {
             html = getHtml(url);
             this.lastJsonRaFromServer = html;
@@ -90,9 +86,8 @@ public class RAIDA {
             ex.printStackTrace();
             return "error";
         }
-        Instant after = Instant.now();
-        this.ms = Duration.between(before, after).toMillis();
 
+        long start = System.nanoTime();
         try {
             JSONObject json = new JSONObject(html);
             this.msg = json.getString("message");
@@ -102,15 +97,13 @@ public class RAIDA {
             e.printStackTrace();
         }
 
-        System.out.println( html );
         boolean isReady = html.contains("ready");
-        if (isReady) {
-            this.status = "ready";
-            return "ready";
-        } else {
-            this.status = "error";
-            return "error";
-        }
+        this.status = (isReady) ? "ready" : "error";
+
+        long end = System.nanoTime();
+        this.ms = "" + new DecimalFormat("####.###").format((end - start) * 0.000001f);
+
+        return this.status;
     }
 
     public String test() {
@@ -127,7 +120,7 @@ public class RAIDA {
         Instant after = Instant.now();
         //System.out.println( html );
         boolean isReady = html.contains("ready");
-        this.ms = Duration.between(before, after).toMillis();
+        this.ms = "" + Duration.between(before, after).toMillis();
         if (isReady) {
             this.testStatus = "ready";
             return "ready";

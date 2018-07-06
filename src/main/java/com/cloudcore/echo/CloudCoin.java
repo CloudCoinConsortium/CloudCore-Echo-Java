@@ -1,4 +1,4 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.io.IOException;
-import java.nio.file.Files;
 
 /**
  * Creats a CloudCoin
@@ -455,7 +454,7 @@ public class CloudCoin {
         json += "}";
         //Find date, replace the date in json with new date.
         if (extension.equalsIgnoreCase("bank")) {
-            java.util.Date date = new Date();
+            Date date = new Date();
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             int month = cal.get(Calendar.MONTH);
@@ -752,7 +751,7 @@ public class CloudCoin {
     }
 
     public void calcExpirationDate() {
-        java.util.Date date = new Date();
+        Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int month = cal.get(Calendar.MONTH);

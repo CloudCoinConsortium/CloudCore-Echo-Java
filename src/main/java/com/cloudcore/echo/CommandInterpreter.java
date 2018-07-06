@@ -1,9 +1,5 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
-import java.security.SecureRandom;
 import java.util.concurrent.*;
 import java.util.Random;
 import java.util.List;
@@ -13,8 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.io.PrintWriter;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 //import org.json.*;
 

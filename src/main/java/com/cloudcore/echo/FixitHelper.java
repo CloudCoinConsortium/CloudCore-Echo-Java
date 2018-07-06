@@ -1,5 +1,4 @@
-package com.cloudcore.bank.echo;
-
+package com.cloudcore.echo;
 
 /**
  * Used to track the progress of fixing a fracktured cloud coin

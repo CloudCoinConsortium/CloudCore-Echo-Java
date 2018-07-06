@@ -1,9 +1,7 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import java.io.IOException;
 import java.net.*;
-import java.time.Instant;
-import java.util.Arrays;
 
 public class MainTestCallEcho {
 

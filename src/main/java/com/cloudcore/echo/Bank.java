@@ -1,12 +1,9 @@
-package com.cloudcore.bank.echo;
+package com.cloudcore.echo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.security.SecureRandom;
-import java.util.concurrent.*;
 import java.util.Random;
 //import org.json.JSONException;
 //import org.json.JSONArray;
@@ -14,9 +11,6 @@ import java.util.Random;
 import java.util.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,6 +1,4 @@
-package com.cloudcore.bank.echo;
-
-/*
+package com.cloudcore.echo;/*
 Copyright (c) 2010, J Boyd Trolinger and Eric Weesner
 
 Changes added 10/15/2014 by Sean H. Worthington
