@@ -1,5 +1,12 @@
 package com.cloudcore.echo;
 
+/*
+  Copyright (c) 2018 Ben Ward, 07/06/18
+
+  This work is licensed under the terms of the MIT license.
+  For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -32,7 +39,7 @@ public class MainTestEcho {
             System.out.println("Server Receive Data:" + msg);
 
             if (msg.equalsIgnoreCase("echo test"))
-            CommandInterpreter.testEchoRaida();
+            CommandInterpreter.testRaidaEcho();
         }
     }
 }
