@@ -7,6 +7,7 @@ package com.cloudcore.echo;
   For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+import com.cloudcore.echo.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,7 +64,7 @@ public class RAIDA {
         long start;
 
         try {
-            html = getHtml(url);
+            html = Utils.getHtmlFromURL(url);//getHtml(url);
             this.lastJsonRaFromServer = html;
 
             start = System.nanoTime();
@@ -71,10 +72,10 @@ public class RAIDA {
             JSONObject json = new JSONObject(html);
             this.msg = json.getString("message");
             this.msServer = (long) (1000f * Float.valueOf(msg.substring(msg.lastIndexOf('=') + 2)));
-        } catch (IOException | JSONException | NumberFormatException e) {
+        } catch (JSONException | NumberFormatException e) {
             this.status = "error";
             start = System.nanoTime();
-            System.out.println("Error: html response does not contain a valid message response: " + html);
+            System.out.println("Error: html response for " + fullUrl + " does not contain a valid message response: " + html);
             e.printStackTrace();
         }
 
@@ -85,25 +86,5 @@ public class RAIDA {
         this.ms = "" + new DecimalFormat("####.###").format((end - start) * 0.000001f);
 
         return this.status;
-    }
-
-    /** Connects to a URL and returns the HTML output. */
-    public String getHtml(String url_in) throws IOException {
-        int c;
-        URL cloudCoinGlobal = new URL(url_in);
-        URLConnection conn = cloudCoinGlobal.openConnection();
-        conn.setReadTimeout(10000); //set for two seconds
-        conn.setReadTimeout(10000);
-        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-        InputStream input = conn.getInputStream();
-
-        StringBuilder sb = new StringBuilder();
-
-        while (((c = input.read()) != -1)) {
-            sb.append((char) c);
-        }
-        input.close();
-        this.lastHtml = sb.toString();
-        return sb.toString();
     }
 }
