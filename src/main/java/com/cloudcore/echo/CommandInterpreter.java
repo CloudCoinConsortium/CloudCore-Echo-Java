@@ -43,7 +43,6 @@ public class CommandInterpreter {
             System.out.println("New root path: " + args[0]);
             FileSystem.changeRootPath(args[0]);
         }
-        FileSystem.changeRootPath("C:\\CloudCoinServer\\Accounts\\DefaultUser\\");
         System.out.println(FileSystem.RootPath);
 
         initialize();
@@ -56,8 +55,6 @@ public class CommandInterpreter {
                 FileSystem.archiveCommand(command);
                 exitIfSingleRun();
             }
-
-        testRaidaEcho();
 
         FolderWatcher watcher = new FolderWatcher(FileSystem.CommandFolder);
         System.out.println("Watching for commands at " + FileSystem.CommandFolder);
