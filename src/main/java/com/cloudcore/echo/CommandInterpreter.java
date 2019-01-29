@@ -7,6 +7,14 @@ package com.cloudcore.echo;
   For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+import com.cloudcore.echo.core.FileSystem;
+import com.cloudcore.echo.server.Command;
+import com.cloudcore.echo.server.FolderWatcher;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,6 +37,62 @@ public class CommandInterpreter {
     // Methods
 
     public static void main(String[] args) {
+        SimpleLogger.writeLog("ServantEchoerStarted", "");
+        singleRun = isSingleRun(args);
+        if (args.length != 0 && Files.exists(Paths.get(args[0]))) {
+            System.out.println("New root path: " + args[0]);
+            FileSystem.changeRootPath(args[0]);
+        }
+        FileSystem.changeRootPath("C:\\CloudCoinServer\\Accounts\\DefaultUser\\");
+        System.out.println(FileSystem.RootPath);
+
+        initialize();
+        initializeRealRaida();
+
+        ArrayList<Command> commands = FileSystem.getCommands();
+        if (commands.size() > 0)
+            for (Command command : commands) {
+                testRaidaEcho();
+                FileSystem.archiveCommand(command);
+                exitIfSingleRun();
+            }
+
+        testRaidaEcho();
+
+        FolderWatcher watcher = new FolderWatcher(FileSystem.CommandFolder);
+        System.out.println("Watching for commands at " + FileSystem.CommandFolder);
+        while (true) {
+            try {
+                Thread.sleep(1000);
+
+                if (watcher.newFileDetected()) {
+                    System.out.println(Instant.now().toString() + ": Exporting coins...");
+                    commands = FileSystem.getCommands();
+                    for (Command command : commands) {
+                        testRaidaEcho();
+                        FileSystem.archiveCommand(command);
+                        exitIfSingleRun();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Uncaught exception - " + e.getLocalizedMessage());
+            }
+        }
+    }
+
+    public static boolean singleRun = false;
+    public static boolean isSingleRun(String[] args) {
+        for (String arg : args)
+            if (arg.equals("singleRun"))
+                return true;
+        return false;
+    }
+    public static void exitIfSingleRun() {
+        if (singleRun)
+            System.exit(0);
+    }
+
+    public static void commandlineversion(String[] args) {
         initialize();
 
         run();
@@ -132,6 +196,16 @@ public class CommandInterpreter {
 
     /** Sends an echo to each RAIDA server and logs the results. */
     public static void testRaidaEcho() {
+        try {
+            for(File file: new File(FileSystem.LogsFolder).listFiles())
+                if (!file.isDirectory())
+                    file.delete();
+            Files.deleteIfExists(Paths.get(FileSystem.LogsFolder));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println("\nEchoing RAIDA.\n");
 
         initializeRaidaEcho();

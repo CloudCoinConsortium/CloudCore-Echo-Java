@@ -1,5 +1,8 @@
 package com.cloudcore.echo.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +11,18 @@ import java.net.URL;
 
 public class Utils {
 
+
+    /**
+     * Creates a Gson object, a JSON parser for converting JSON Strings and objects.
+     *
+     * @return a Gson object.
+     */
+    public static Gson createGson() {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .setPrettyPrinting()
+                .create();
+    }
 
     public static String getHtmlFromURL(String urlAddress) {
         String data = "";

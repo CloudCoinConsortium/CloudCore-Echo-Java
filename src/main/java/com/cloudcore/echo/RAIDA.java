@@ -61,6 +61,7 @@ public class RAIDA {
     public String echo() {
         String html = "";
         String url = this.fullUrl + "echo";
+        System.out.println(url);
         long start;
 
         try {
